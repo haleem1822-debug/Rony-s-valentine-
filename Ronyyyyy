@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine</title>
+<style>
+body {
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial;
+    overflow: hidden;
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+h1 {
+    color: #ff4b7d;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    font-size: 20px;
+    padding: 10px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#yesBtn {
+    background-color: #4CAF50;
+    color: white;
+    animation: pulse 1.5s infinite;
+}
+
+#noBtn {
+    background-color: #f44336;
+    color: white;
+    position: fixed;
+}
+
+/* قلوب متحركة */
+.heart {
+    position: fixed;
+    color: red;
+    font-size: 20px;
+    animation: float 3s linear infinite;
+}
+
+@keyframes float {
+    from {transform: translateY(0);}
+    to {transform: translateY(-150px); opacity: 0;}
+}
+
+@keyframes pulse {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.1);}
+    100% {transform: scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="main">
+    <h1>Rony, will u be my Valentine? ❤️</h1>
+
+    <div class="buttons">
+        <button id="yesBtn" onclick="yesClick()">Yes</button>
+        <button id="noBtn" onclick="moveNo()">No</button>
+    </div>
+</div>
+
+<script>
+let growCount = 0;
+
+// لما تدوس على No بس
+function moveNo() {
+    let noBtn = document.getElementById("noBtn");
+
+    let x = Math.random() * (window.innerWidth - 120);
+    let y = Math.random() * (window.innerHeight - 60);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    growYes();
+}
+
+// تكبير زر Yes
+function growYes() {
+    let yesBtn = document.getElementById("yesBtn");
+    growCount++;
+    let scale = 1 + (growCount * 0.3);
+    yesBtn.style.transform = "scale(" + scale + ")";
+}
+
+// قلوب طالعة من زر Yes
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+
+    let yesBtn = document.getElementById("yesBtn");
+    let rect = yesBtn.getBoundingClientRect();
+
+    heart.style.left = rect.left + rect.width/2 + "px";
+    heart.style.top = rect.top + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 3000);
+}, 500);
+
+function yesClick() {
+    document.getElementById("main").innerHTML = `
+        <h1>❤️❤️❤️</h1>
+        <p style="font-size:20px; line-height:1.8; color:#ff4b7d;">
+        انا بحبك اوي يا روني وبموت فيكي يا حياتي ❤️<br><br>
+        دا اول فلانتين لينا مع بعض ومش هيكون الاخير ان شاء الله 🌹<br><br>
+        ان شاء الله الجاي يبقي واحنا بنجهز فرحنا 💍<br>
+        واللي بعده واحنا متجوزين 👰🤵<br><br>
+        انا بحبك بحبك اوي يا روحي وبعشقك ❤️<br>
+        ربنا يخليكي ليا 🤍<br><br>
+        <strong>إمضاء: حبيبك حليم</strong>
+        </p>
+    `;
+}
+</script>
+
+</body>
+</html>
